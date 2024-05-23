@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Dog List</h1>
+    <table class="table table-striped table-hover">
+        <thead> <!-- Table Head -->
+            <tr> <!-- Table Row -->
+                <th>Name</th> <!-- Table Header -->
+                <th>Breed</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dog in dogs_list %}
+                <tr> <!-- Table Row -->
+                    <td>{{ dog.name }}</td> <!-- Table Data -->
+                    <td>{{ dog.breed }}</td>
+                    <td>{{ dog.age }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
