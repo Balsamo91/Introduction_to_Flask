@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content_history %}
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th><div class="table-content">Type</div></th>
+            <th><div class="table-content">Name</div></th>
+            <th><div class="table-content">Price</div></th>
+            <th><div class="table-content">Quantity</div></th>
+            <th><div class="table-content">Timestamp</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><div class="table-content">purchase action</div></td>
+            <td><div class="table-content">fanta</div></td>
+            <td><div class="table-content">1</div></td>
+            <td><div class="table-content">100</div></td>
+            <td><div class="table-content">datetime.datetime(2024, 5, 4, 10, 16, 49, 897506)</div></td>
+        </tr>
+        <tr>
+            <td><div class="table-content">sale action</div></td>
+            <td><div class="table-content">coke</div></td>
+            <td><div class="table-content">5</div></td>
+            <td><div class="table-content">99</div></td>
+            <td><div class="table-content">datetime.datetime(2024, 5, 4, 10, 17, 7, 247094)</div></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
