@@ -33,17 +33,23 @@ def purchase():
 
 @app.route('/submit_purchase', methods=['POST'])
 def submit_purchase():
+    global account
     # Get the name, breed and age from the form submission
     name = request.form['name']
     price = float(request.form['price'])
     quantity = int(request.form['quantity'])
 
-    # Append the dog to the list of dogs 
-    warehouse_list.append({
-        'name': name,
-        'price': price,
-        'quantity': quantity
-    })
+    if account > price:
+    # If user enters the same item, this will catch it and it will add the quantity, if not it will add the dict to the list warehouse_list[] 
+        item_exist = False
+        for p in warehouse_list:
+            if p["name"] == name:
+                p["quantity"] += quantity
+                item_exist = True
+                break
+        if not item_exist:
+            warehouse_list.append({"name" : name, "price" : price, "quantity" : quantity})
+        account -= price * quantity # substract the purchased items from the account
     
     # Redirect me to the main page
     return redirect('/') 
