@@ -55,6 +55,7 @@ def sale():
 
 @app.route('/submit_sale', methods=['POST'])
 def submit_sale():
+    global account
     # Get the name, breed and age from the form submission
     name = request.form['name']
     price = float(request.form['price'])
@@ -62,8 +63,9 @@ def submit_sale():
 
     # Append the dog to the list of dogs 
     for s in warehouse_list:
-            if s["name"] == name:
+            if s["name"] == name and (s["price"] <= price or s["price"] >= price) and s["quantity"] >= quantity:
                 s["quantity"] -= quantity
+                account += price * quantity
                 if s['quantity'] <= 0:
                     warehouse_list.remove(s)
                 break
