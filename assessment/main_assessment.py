@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+import datetime
 
 app = Flask(__name__)
 
@@ -21,6 +22,23 @@ warehouse_list = [
 ]
 
 account = 12500
+
+operations_recorded = [
+        {
+        'type': 'purchase action',
+        'name': 'fanta',
+        'price': 1,
+        'quantity': 100,
+        'timestamp': '2024-06-03 12:22:49',
+    },
+    {
+        'type': 'sale action',
+        'name': 'coke',
+        'price': 5,
+        'quantity': 99,
+        'timestamp': '2024-06-05 12:22:49',
+    }
+]
 
 @app.route('/')
 def index():
@@ -51,6 +69,14 @@ def submit_purchase():
             warehouse_list.append({"name" : name, "price" : price, "quantity" : quantity})
         account -= price * quantity # substract the purchased items from the account
     
+        operations_recorded.append({
+            'type': 'purchase action',
+            'name': name,
+            'price': price,
+            'quantity': quantity,
+            'timestamp': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+
     # Redirect me to the main page
     return redirect('/') 
 
@@ -74,6 +100,15 @@ def submit_sale():
                 account += price * quantity
                 if s['quantity'] <= 0:
                     warehouse_list.remove(s)
+
+                operations_recorded.append({
+                    'type': 'sale action',
+                    'name': name,
+                    'price': price,
+                    'quantity': quantity,
+                    'timestamp': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                })
+                
                 break
 
     # Redirect me to the main page
@@ -91,16 +126,30 @@ def submit_balance():
 
     if operation == 'Add':
         account += amount
+        operations_recorded.append({
+            'type': 'balance action',
+            'name': 'Add',
+            'price': amount,
+            'quantity': 'N/A',
+            'timestamp': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
     elif operation == 'Withdraw' and account >= amount:
         account -= amount
-
+        operations_recorded.append({
+            'type': 'balance action',
+            'name': 'Withdraw',
+            'price': amount,
+            'quantity': 'N/A',
+            'timestamp': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+    
     # Redirect me to the main page
     return redirect('/') 
 
 
 @app.route('/history')
 def history():
-    return render_template("history.html")
+    return render_template("history.html", operations_recorded=operations_recorded, balance=account)
 
 app.run(debug=True)
 
