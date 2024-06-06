@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Dog List</h1>
+    <table class="table table-striped table-hover">
+        <thead> <!-- Table Head -->
+            <tr> <!-- Table Row -->
+                <th>ID</th><!-- Table Header -->
+                <th>Name</th> 
+                <th>Breed</th>
+                <th>Age</th>
+                <th>Entry Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dog in dogs_list %}
+                <tr> <!-- Table Row -->
+                    <td>{{ dog.id }}</td>
+                    <td>{{ dog.name }}</td> <!-- Table Data -->
+                    <td>{{ dog.breed }}</td>
+                    <td>{{ dog.age }}</td>
+                    <td>{{ dog.entry_date }}</td>
+                    <td>
+                        <a href="/delete_dog/{{ dog.id }}" class="btn btn-error">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
